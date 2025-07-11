@@ -1,3 +1,10 @@
 body {
-    background-color: aqua;
+    text-align: center;
+    background-color: white;
+}
+
+main {
+    background-color: antiquewhite;
+    width: 500px;
+    justify-self: center;
 }

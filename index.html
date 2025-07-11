@@ -8,13 +8,43 @@
 
     <!-- CSS Extrenal -->
     <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-    <header></header>
-        <h1>Todo List</h1>
-    <main></main>
 
-    <footer></footer>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Javascript external-->
+    <script src="js/script.js"></script>
+</head>
+<body class="flex flex-col items-center justify-evenly min-h-screen bg-grey-500">
+    <header>
+        <h1 class="text-3xl font-bold">Todo List</h1>
+    </header>
+    <main class="py-[16px] rounded">
+        <form class="flex justify-between p-[8px]">
+            <div class="flex gap-[8px]">
+                <input type="text" id="task-input" class="border border-gray-500 rounded p-[5px]" placeholder="Add new task">
+                <input type="date" id="due-date-input" class="border border-gray-500 rounded p-[4px]" placeholder="Due date">
+            </div>
+            <button type="button" class="bg-blue-500 text-white rounded p-[6px] w-[50px]" onclick="addTask();">+</button>
+        </form>
+        <section class="flex justify-between p-[8px]">
+            <div class="flex gap-[8px]">
+                <button class="bg-grey-200 p-[4px] rounded">Show Completed</button>
+                <button class="bg-grey-200 p-[4px] rounded">Show All</button>
+            </div>
+            <Button class="bg-red-500 text-white p-[4px] rounded"onclick="deleteTask();">Delete All</Button>
+        </section>
+
+        <section>
+            <h1 class="text-xl font-bold">Tasks</h1>
+            <div id="task-list">
+                <p>No Task!</p>
+            </div>
+        </section>
+    </main>
+    <footer>
         <span>© 2025 Todo List. All Rights Reserved.</span>
-</body>
+    </footer>
+    
+    </body>
 </html>
