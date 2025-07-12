@@ -33,17 +33,22 @@ function addTask(){
 
 //<p> ${element.task} {Due: ${element.dueDate}} </p>
 function displayTask(){
+    const today = new Date().toISOString().split('T')[0];
     const displayInput = document.getElementById('task-list');
     displayInput.innerHTML = '';
     tasks.forEach(element => {
+        const isOverdue = element.dueDate < today;
+        const buttonLabel = element.completed ? 'Undo' : 'Done';
+        const buttonColor = element.completed ? 'bg-blue-400' : 'bg-green-400';
         const taskItem = `
         <div class="flex justify-between items-center p-[8px] border-b border-black-500">
             <div class="flex flex-col">
                 <span class="text-lg">${element.task}</span>
-                <span class="text-sm text-grey-500 ">${element.dueDate}</span>
+                <span class="text-sm text-gray-500">${element.dueDate}</span>
             </div>
-            <button onclick="statusChange(${element.id})" class="bg-green-400 px-2 py-1 rounded">
-                    ${element.completed ? 'Undo' : 'Completed'}
+                <button onclick="statusChange(${element.id})" 
+                    class="${buttonColor} px-2 py-1 rounded text-white">
+                    ${buttonLabel}
                 </button>
             <button class="bg-red-500 text-white p-[4px] rounded" onclick="deleteTaskOne('${element.id}')">Delete</button>
         </div>
@@ -76,15 +81,41 @@ function statusChange(id){
         displayTask();
     }
 }
-function filterTask(){
-    const showCompleted = document.querySelector('button.bg-gray-200');
-    const showAll = document.querySelector('button.bg-green-200');
-    showCompleted.addEventListener('click', () => {
-        const completedTask = tasks.filter(task => task.completed);
-        displayFilteredTask(completedTask);
-    });
 
-    showAll.addEventListener('click', () => {
-        displayTask();
+function filterTask(filterType){
+    let filtered = [];
+    if(filterType === 'completed'){
+        filtered = tasks.filter(task => task.completed);
+    }
+    else {
+        filtered = tasks;
+    }
+    displayFilteredTask(filtered);
+}
+
+function displayFilteredTask(taskArray) {
+    const displayInput = document.getElementById('task-list');
+    displayInput.innerHTML = '';
+    taskArray.forEach(element => {
+        const buttonLabel = element.completed ? 'Undo' : 'Done';
+        const buttonColor = element.completed ? 'bg-blue-400' : 'bg-green-400';
+        const taskItem = `
+            <div class="flex justify-between items-center p-[8px] border-b border-black-500">
+                <div class="flex flex-col">
+                    <span class="text-lg">${element.task}</span>
+                    <span class="text-sm text-gray-500">${element.dueDate}</span>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="statusChange(${element.id})" 
+                        class="${buttonColor} px-2 py-1 rounded text-white">
+                        ${buttonLabel}
+                    </button>
+                    <button class="bg-red-500 text-white p-[4px] rounded" onclick="deleteTaskOne('${element.id}')">
+                        Delete
+                    </button>
+                </div>
+            </div>
+        `;
+        displayInput.innerHTML += taskItem;
     });
 }
